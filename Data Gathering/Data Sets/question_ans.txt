@@ -1,0 +1,44 @@
+ArticleTitle	Question	Answer	DifficultyFromQuestioner	DifficultyFromAnswerer	ArticleFile
+Abraham_Lincoln	Was Abraham Lincoln the sixteenth President of the United States?	yes	easy	easy	S08_set3_a4
+Abraham_Lincoln	Was Abraham Lincoln the sixteenth President of the United States?	Yes.	easy	easy	S08_set3_a4
+Abraham_Lincoln	Did Lincoln sign the National Banking Act of 1863?	yes	easy	medium	S08_set3_a4
+Abraham_Lincoln	Did Lincoln sign the National Banking Act of 1863?	Yes.	easy	easy	S08_set3_a4
+Abraham_Lincoln	Did his mother die of pneumonia?	no	easy	medium	S08_set3_a4
+Abraham_Lincoln	Did his mother die of pneumonia?	No.	easy	easy	S08_set3_a4
+Abraham_Lincoln	How many long was Lincoln's formal education?	18 months	medium	easy	S08_set3_a4
+Abraham_Lincoln	How many long was Lincoln's formal education?	18 months.	medium	medium	S08_set3_a4
+Abraham_Lincoln	When did Lincoln begin his political career?	1832	medium	easy	S08_set3_a4
+Abraham_Lincoln	When did Lincoln begin his political career?	1832.	medium	medium	S08_set3_a4
+Abraham_Lincoln	What did The Legal Tender Act of 1862 establish?	the United States Note, the first paper currency in United States history	medium	easy	S08_set3_a4
+Abraham_Lincoln	What did The Legal Tender Act of 1862 establish?	The United States Note, the first paper currency in United States history.	medium	medium	S08_set3_a4
+Abraham_Lincoln	Who suggested Lincoln grow a beard?	11-year-old Grace Bedell	hard	medium	S08_set3_a4
+Abraham_Lincoln	Who suggested Lincoln grow a beard?	Grace Bedell.	hard	medium	S08_set3_a4
+Abraham_Lincoln	When did the Gettysburg address argue that America was born?	1776	hard	hard	S08_set3_a4
+Abraham_Lincoln	When did the Gettysburg address argue that America was born?	1776.	hard	hard	S08_set3_a4
+Abraham_Lincoln	Did Lincoln beat John C. Breckinridge in the 1860 election?	yes	hard	medium	S08_set3_a4
+Abraham_Lincoln	Did Lincoln beat John C. Breckinridge in the 1860 election?	Yes.	hard	hard	S08_set3_a4
+Abraham_Lincoln	Was Abraham Lincoln the first President of the United States?	No	easy	easy	S08_set3_a4
+Abraham_Lincoln	Was Abraham Lincoln the first President of the United States?	No	easy	medium	S08_set3_a4
+Abraham_Lincoln	Did Lincoln start his political career in 1832?	Yes	easy	easy	S08_set3_a4
+Abraham_Lincoln	Did Lincoln start his political career in 1832?	Yes	easy	easy	S08_set3_a4
+Abraham_Lincoln	Did Lincoln ever represent Alton & Sangamon Railroad?	Yes	easy	easy	S08_set3_a4
+Abraham_Lincoln	Did Lincoln ever represent Alton & Sangamon Railroad?	Yes	easy	easy	S08_set3_a4
+Abraham_Lincoln	Which county was Lincoln born in?	Hardin County	medium	medium	S08_set3_a4
+Abraham_Lincoln	Which county was Lincoln born in?	Southeast Hardin County, Kentucky	medium	medium	S08_set3_a4
+Abraham_Lincoln	When did Lincoln first serve as President?	March 4, 1861	medium	hard	S08_set3_a4
+Abraham_Lincoln	When did Lincoln deliver the Gettysburg Address?	November 19, 1863	medium	easy	S08_set3_a4
+Abraham_Lincoln	When did Lincoln deliver the Gettysburg Address?	November 19, 1863.	medium	medium	S08_set3_a4
+Abraham_Lincoln	Which speech included 'Four score and seven years ago'?	Gettysburg Address	easy	easy	S08_set3_a4
+Abraham_Lincoln	Which speech included 'Four score and seven years ago'?	The Gettysburg Address.	easy	medium	S08_set3_a4
+Abraham_Lincoln	Who assassinated Abraham Lincoln?	John Wilkes Booth	easy	easy	S08_set3_a4
+Abraham_Lincoln	Who assassinated Abraham Lincoln?	John Wilkes Booth.	easy	easy	S08_set3_a4
+Abraham_Lincoln	Where was Lincoln assassinated?	Ford's Theatre	easy	medium	S08_set3_a4
+Abraham_Lincoln	Where was Lincoln assassinated?	Ford's Theatre in Washington, D.C.	easy	easy	S08_set3_a4
+Abraham_Lincoln	When was the Emancipation Proclamation issued?	January 1, 1863	medium	medium	S08_set3_a4
+Abraham_Lincoln	When was the Emancipation Proclamation issued?	January 1, 1863.	medium	easy	S08_set3_a4
+Abraham_Lincoln	Who was Lincoln's Vice President during his second term?	Andrew Johnson	hard	medium	S08_set3_a4
+Abraham_Lincoln	Who was Lincoln's Vice President during his second term?	Andrew Johnson.	hard	hard	S08_set3_a4
+Abraham_Lincoln	Who was Lincoln's wife?	Mary Todd Lincoln	easy	easy	S08_set3_a4
+Abraham_Lincoln	Who was Lincoln's wife?	Mary Todd.	easy	medium	S08_set3_a4
+Abraham_Lincoln	Which political party did Lincoln represent when elected president?	Republican	medium	easy	S08_set3_a4
+Abraham_Lincoln	Which political party did Lincoln represent when elected president?	Republican Party.	medium	medium	S08_set3_a4
