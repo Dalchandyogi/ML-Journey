@@ -263,6 +263,34 @@ END;
 
 -- storage
 SELECT Memory,
-substring_index(Memory, '+', 1),
-CASE WHEN Memory LIKE '%+%' THEN TRIM(substring_index(Memory, '+', -1)) ELSE 0 END
+REGEXP_SUBSTR(substring_index(Memory, '+', 1), '[0-9]+'),
+CASE 
+	WHEN Memory LIKE '%+%' THEN REGEXP_SUBSTR(TRIM(substring_index(Memory, '+', -1)), '[0-9]+')
+    ELSE 0 
+END FROM laptop_backup;
+
+-- Add values
+UPDATE laptop_backup
+SET primary_storage = REGEXP_SUBSTR(substring_index(Memory, '+', 1), '[0-9]+'),
+secondary_storage = CASE WHEN Memory LIKE '%+%' THEN REGEXP_SUBSTR(TRIM(substring_index(Memory, '+', -1)), '[0-9]+') ELSE 0 END;
+
+-- fix TB values 
+SELECT primary_storage,
+CASE 
+	WHEN primary_storage <= 2 THEN primary_storage*1024 ELSE primary_storage END,
+secondary_storage,
+CASE 
+	WHEN secondary_storage <= 2 THEN secondary_storage*1024 ELSE secondary_storage END
 FROM laptop_backup;
+
+
+-- apply changes 
+UPDATE laptop_backup
+SET primary_storage = CASE WHEN primary_storage <= 2 THEN primary_storage*1024 ELSE primary_storage END,
+secondary_storage = CASE WHEN secondary_storage <= 2 THEN secondary_storage*1024 ELSE secondary_storage END;
+
+-- delete old memory col
+ALTER TABLE laptop_backup DROP COLUMN Memory;
+
+
+SELECT * FROM laptop_backup;
