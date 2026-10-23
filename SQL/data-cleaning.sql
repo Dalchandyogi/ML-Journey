@@ -112,7 +112,7 @@ SET gpu_name =  REPLACE(Gpu, gpu_brand, '');
 -- delte old Gpu col 
 ALTER TABLE laptop_backup DROP Gpu;
 
--- 12 Work on CPU col - create 3 new cols
+-- ======================== 12 Work on CPU col - create 3 new cols =======================================
 
 ALTER TABLE laptop_backup
 ADD COLUMN cpu_brand VARCHAR(255) AFTER Cpu,
@@ -144,3 +144,125 @@ SET cpu_name = REPLACE(REPLACE(Cpu, cpu_brand, ''), substring_index(REPLACE(Cpu,
 
 -- drop Cpu col
 ALTER TABLE laptop_backup DROP COLUMN Cpu;
+
+
+-- ======================== 13 Work on ScreenResulation col - create 3 new cols =======================================
+-- height & width 
+SELECT ScreenResolution,
+substring_index(substring_index(ScreenResolution, ' ', -1), 'x', 1),
+substring_index(substring_index(ScreenResolution, ' ', -1), 'x', -1)
+FROM laptop_backup;
+
+-- create new cols
+ALTER TABLE laptop_backup 
+ADD COLUMN resolution_width INTEGER AFTER ScreenResolution,
+ADD COLUMN resolution_height INTEGER AFTER resolution_width;
+
+-- add values to height and width
+UPDATE laptop_backup
+SET resolution_width = substring_index(substring_index(ScreenResolution, ' ', -1), 'x', 1),
+resolution_height = substring_index(substring_index(ScreenResolution, ' ', -1), 'x', -1);
+
+-- touch screen 
+SELECT ScreenResolution, 
+ScreenResolution LIKE '%touch%'
+FROM laptop_backup;
+
+-- create new cols - is_touchscreen
+ALTER TABLE laptop_backup ADD COLUMN is_touchscreen INT AFTER resolution_height;
+
+-- add Values 
+UPDATE laptop_backup
+SET is_touchscreen = ScreenResolution LIKE '%touch%';
+
+-- display_type
+SELECT ScreenResolution,
+       TRIM(
+           REPLACE(
+               REPLACE(
+                   REPLACE(
+                       REPLACE(
+                           REPLACE(ScreenResolution, SUBSTRING_INDEX(ScreenResolution, ' ', -1), ''),
+                       'Touchscreen / ', ''),
+                   '/ Touchscreen', ''),
+               '/Touchscreen', ''),
+           'Touchscreen', '')
+       ) AS display_type
+FROM laptop_backup;
+
+-- create new col
+ALTER TABLE laptop_backup ADD COLUMN display_type VARCHAR(255) AFTER is_touchscreen;
+
+-- add vlaues
+UPDATE laptop_backup
+SET display_type = TRIM(
+					   REPLACE(
+						   REPLACE(
+							   REPLACE(
+								   REPLACE(
+									   REPLACE(ScreenResolution, SUBSTRING_INDEX(ScreenResolution, ' ', -1), ''),
+								   'Touchscreen / ', ''),
+							   '/ Touchscreen', ''),
+						   '/Touchscreen', ''),
+					   'Touchscreen', '')
+                     );
+
+
+-- delete ScreenResolution col
+ALTER TABLE laptop_backup DROP COLUMN ScreenResolution;
+
+
+-- ======================== 14. clean cpu_name col =======================================
+
+SELECT cpu_name,
+substring_index(trim(cpu_name), ' ', 2)
+FROM laptop_backup;
+
+-- update
+UPDATE laptop_backup
+SET cpu_name = substring_index(trim(cpu_name), ' ', 2);
+
+-- ======================== 15. Work on Memory col - create 3 new cols =======================================
+
+-- create 3 new cols
+ALTER TABLE laptop_backup
+ADD COLUMN memory_type VARCHAR(255) AFTER Memory,
+ADD COLUMN primary_storage INTEGER AFTER memory_type,
+ADD COLUMN secondary_storage INTEGER AFTER primary_storage;
+
+-- memory type
+SELECT Memory,
+CASE 
+	WHEN Memory LIKE '%ssd%' AND Memory LIKE '%hdd%' THEN 'Hybrid'
+    WHEN Memory LIKE '%ssd%' AND Memory LIKE '%hybrid%' THEN 'Hybrid'
+	WHEN Memory LIKE '%hdd%' AND Memory LIKE '%hybrid%' THEN 'Hybrid'
+  	WHEN Memory LIKE '%ssd%' AND Memory LIKE '%flash storage%' THEN 'Hybrid'
+	WHEN Memory LIKE '%hdd%' AND Memory LIKE '%flash storage%' THEN 'Hybrid'
+    WHEN Memory LIKE '%ssd%' THEN 'SSD'
+    WHEN Memory LIKE '%hdd%' THEN 'HDD'
+    WHEN Memory LIKE '%flash storage%' THEN 'Flash'
+    WHEN Memory LIKE '%hybrid%' THEN 'Hybrid'
+    ELSE NULL
+END AS memory_type
+FROM laptop_backup;
+
+-- update col
+UPDATE laptop_backup
+SET memory_type = CASE 
+	WHEN Memory LIKE '%ssd%' AND Memory LIKE '%hdd%' THEN 'Hybrid'
+    WHEN Memory LIKE '%ssd%' AND Memory LIKE '%hybrid%' THEN 'Hybrid'
+	WHEN Memory LIKE '%hdd%' AND Memory LIKE '%hybrid%' THEN 'Hybrid'
+  	WHEN Memory LIKE '%ssd%' AND Memory LIKE '%flash storage%' THEN 'Hybrid'
+	WHEN Memory LIKE '%hdd%' AND Memory LIKE '%flash storage%' THEN 'Hybrid'
+    WHEN Memory LIKE '%ssd%' THEN 'SSD'
+    WHEN Memory LIKE '%hdd%' THEN 'HDD'
+    WHEN Memory LIKE '%flash storage%' THEN 'Flash'
+    WHEN Memory LIKE '%hybrid%' THEN 'Hybrid'
+    ELSE NULL
+END;
+
+-- storage
+SELECT Memory,
+substring_index(Memory, '+', 1),
+CASE WHEN Memory LIKE '%+%' THEN TRIM(substring_index(Memory, '+', -1)) ELSE 0 END
+FROM laptop_backup;
