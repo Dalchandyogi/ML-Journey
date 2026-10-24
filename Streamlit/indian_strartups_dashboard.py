@@ -12,6 +12,10 @@ df = pd.read_csv('startup_funding.csv')
 def make_metric(label, number):
     st.metric(label, str(number) + ' Cr')
 
+def make_metric_text(label, text):
+    st.metric(label, text)
+
+
 def load_investor_details(name):
     st.title(name)
 
@@ -88,21 +92,23 @@ def load_investor_details(name):
 
 
 def show_overall_analysis():
-    col1, col2, col3, col4 = st.columns(4)
+    col_all_1, col_all_2, col_all_3, col_all_4 = st.columns(4)
 
     total = round(df['amount'].sum())
     max_funding = df.groupby('startup')['amount'].max().sort_values(ascending=False).head(1).values[0]
     avg_funding = round(df.groupby('startup')['amount'].sum().mean())
     total_funded_startup = df['startup'].nunique()
 
-    with col1:
+    with col_all_1:
         make_metric('Total Investment', total)
-    with col2:
+    with col_all_2:
         st.metric('Max Funding', str(max_funding) + ' Cr', delta='Rapido Bike Taxi', delta_color='green', delta_arrow='off')
-    with col3:
+    with col_all_3:
         make_metric('Avg. Funding', avg_funding)
-    with col4:
+    with col_all_4:
         make_metric('Funded StartUp', total_funded_startup)
+
+    st.markdown("---")
 
     st.subheader("MoM Graph")
 
@@ -345,17 +351,88 @@ def show_overall_analysis():
 
     st.pyplot(fig)
 
+
+def load_company_details(df, company_name):
+
+    st.title(company_name)
+    st.markdown("---")
+    # Filter dataframe for the selected company (case-insensitive)
+    comp_df = df[df['startup'].str.contains(company_name, case=False, na=False)]
+
+    if comp_df.empty:
+        return None
+
+    name = comp_df['startup'].values[0]
+    industry = comp_df['vertical'].values[0] if 'vertical' in comp_df.columns else 'N/A'
+    subindustry = comp_df['subvertical'].values[0] if 'subvertical' in comp_df.columns else 'N/A'
+
+    location = comp_df['city'].values[0] if 'city' in comp_df.columns else 'N/A'
+
+    # Funding rounds breakdown (Stage, Investors, Amount, Date/Year)
+    date_col = 'date' if 'date' in comp_df.columns else 'year'
+    funding_rounds = comp_df[['round', 'investors', 'amount', date_col]].to_dict(orient='records')
+
+    # Find similar companies (operating in the same industry/vertical)
+    similar_companies = df[(df['vertical'] == industry) & (df['startup'] != name)]['startup'].unique()[:5].tolist()
+
+    return {
+        'name': name,
+        'industry': industry,
+        'subindustry': subindustry,
+        'location': location,
+        'funding_rounds': funding_rounds,
+        'similar_companies': similar_companies
+    }
+
 st.sidebar.title("Indian StartUp Analysis")
 option = st.sidebar.selectbox('Select one', ['Overall Analysis', 'StartUp', 'Investor'])
 
 if option == 'Overall Analysis':
     st.title('Overall Analysis')
+    st.markdown("---")
     show_overall_analysis()
 
 elif option == 'StartUp':
-    st.title('StartUp')
-    start_up = st.sidebar.selectbox('Select StartUp', sorted(df['startup'].unique().tolist()))
+    selected_startup = st.sidebar.selectbox('Select StartUp', sorted(df['startup'].unique().tolist()))
     btn1 = st.sidebar.button('Find StartUp')
+
+    if btn1:
+
+        if selected_startup:
+            details = load_company_details(df, selected_startup)
+
+            if details:
+                # Display General Info in columns
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    make_metric_text('Industry', f'{details['industry']}')
+
+                with col2:
+                    make_metric_text('Subindustry', f'{details['subindustry']}')
+
+                with col3:
+                    make_metric_text('Location', f'{details['location']}')
+                with col4:
+                    total_raised = sum([r['amount'] for r in details['funding_rounds'] if pd.notnull(r['amount'])])
+                    make_metric('Total Funding', total_raised)
+
+                st.markdown("---")
+
+                # Funding Rounds Table/Details
+                st.subheader("Funding Rounds History")
+                rounds_df = pd.DataFrame(details['funding_rounds'])
+                st.dataframe(rounds_df, use_container_width=True)
+
+                # Similar Companies
+                st.subheader("Similar Companies")
+                if details['similar_companies']:
+                    st.write(", ".join(details['similar_companies']))
+                else:
+                    st.info("No similar companies found in this vertical.")
+            else:
+                st.warning("No details found for this company.")
+
+
 
 else:
     # st.title('Investor')
