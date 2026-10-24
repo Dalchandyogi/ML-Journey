@@ -2,12 +2,18 @@ import streamlit as st
 import  matplotlib.pyplot as plt
 import  pandas as pd
 import seaborn as sns
+import os
 
 plt.style.use('dark_background')
 
 st.set_page_config(layout='wide', page_title='Indian Startups')
 
-df = pd.read_csv('startup_funding.csv')
+# Get the directory where this python script is located
+script_dir = os.path.dirname(__file__)
+file_path = os.path.join(script_dir, 'startup_funding.csv')
+
+# Load the csv safely
+df = pd.read_csv(file_path)
 
 def make_metric(label, number):
     st.metric(label, str(number) + ' Cr')
