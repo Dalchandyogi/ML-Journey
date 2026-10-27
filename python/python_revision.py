@@ -124,7 +124,7 @@ show_model_config(model="RandomForest", n_estimators=100, max_depth=10, random_s
 
 # ----------------------------------------  Comprehensions -----------------------------------------------------------
 
-numbers = list(range(1, 21))
+numbers = list(range(1, 31))
 
 squares = [x**2 for x in numbers]
 even_nums = [x for x in numbers if x%2 == 0]
