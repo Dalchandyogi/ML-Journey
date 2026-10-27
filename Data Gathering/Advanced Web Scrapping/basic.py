@@ -14,7 +14,8 @@ s = Service(driver_path)
 driver = webdriver.Chrome()
 
 # open the url
-driver.get('https://google.com')
+target_url = 'https://google.com'
+driver.get(target_url)
 
 # ====== Task - 1. Open google and search for the campusx, and see the DSMP page =======
 time.sleep(2)
