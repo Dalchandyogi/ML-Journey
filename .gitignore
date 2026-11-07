@@ -4,3 +4,8 @@
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 *.ipynb_checkpoints/
+
+
+# large DataSets
+ML/Feature Enginering/Feature Selection/Datasets/train.csv
+ML/Feature Enginering/Feature Selection/Datasets/test.csv
